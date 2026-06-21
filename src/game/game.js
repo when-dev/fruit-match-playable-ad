@@ -1,5 +1,6 @@
 import { GAME_CONFIG } from './config'
 import { createInitialState, GAME_STATUS } from './state'
+import { clamp } from '../utils/clamp'
 
 export class Game {
 	constructor(rootElement) {
@@ -7,6 +8,7 @@ export class Game {
 		this.state = createInitialState()
 
 		this.handleStart = this.handleStart.bind(this)
+		this.handlePointerMove = this.handlePointerMove.bind(this)
 	}
 
 	init() {
@@ -20,6 +22,29 @@ export class Game {
 
 	handleStart() {
 		this.start()
+	}
+
+	handlePointerMove(event) {
+		if (this.state.status !== GAME_STATUS.PLAYING) {
+			return;
+		}
+
+		const gameCard = this.rootElement.querySelector('.game-card');
+		const rect = gameCard.getBoundingClientRect();
+
+		const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+		const relativeX = clientX - rect.left;
+
+		const scaleX = GAME_CONFIG.width / rect.width;
+		const gameX = relativeX * scaleX;
+
+		this.state.basket.x = clamp(
+			gameX - this.state.basket.width / 2,
+			0,
+			GAME_CONFIG.width - this.state.basket.width,
+		);
+
+		this.renderGame();
 	}
 
 	render() {
@@ -115,5 +140,9 @@ export class Game {
 				</section>
 			</main>
 		`
+		const gameCard = this.rootElement.querySelector('.game-card');
+
+		gameCard.addEventListener('mousemove', this.handlePointerMove);
+		gameCard.addEventListener('touchmove', this.handlePointerMove, { passive: true });
 	}
 }
