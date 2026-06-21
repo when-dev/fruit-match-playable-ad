@@ -10,6 +10,7 @@ export const GAME_STATUS = {
 export function createInitialState() {
 	return {
 		status: GAME_STATUS.INTRO,
+		endReason: null,
 
 		score: 0,
 		lives: GAME_CONFIG.initialLives,

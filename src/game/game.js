@@ -50,6 +50,7 @@ export class Game {
 		if (this.state.timeLeft <= 0) {
 			this.state.timeLeft = 0
 			this.state.status = GAME_STATUS.LOSE
+			this.state.endReason = 'time'
 			return
 		}
 
@@ -113,6 +114,7 @@ export class Game {
 					if (this.state.lives <= 0) {
 						this.state.lives = 0
 						this.state.status = GAME_STATUS.LOSE
+						this.state.endReason = 'bomb';
 					}
 				}
 
@@ -322,13 +324,21 @@ export class Game {
 	renderEndScreen() {
 		const isWin = this.state.status === GAME_STATUS.WIN
 
+		const endTitle = isWin ? 'You Win!' : 'Game Over';
+
+		const endEyebrow = isWin 
+		? 'LEVEL COMPLETE'
+		: this.state.endReason === 'bomb'
+			? 'BOMBED OUT'
+			: 'TIME IS UP';
+
 		this.rootElement.innerHTML = `
     <main class="ad">
       <section class="game-card">
         <div class="screen screen--end">
-          <p class="eyebrow">${isWin ? 'LEVEL COMPLETE' : 'TIME IS UP'}</p>
+          <p class="eyebrow">${endEyebrow}</p>
 
-          <h1 class="title">${isWin ? 'You Win!' : 'Game Over'}</h1>
+          <h1 class="title">${endTitle}</h1>
 
           <p class="description">
             Your score: <strong>${this.state.score}</strong>
