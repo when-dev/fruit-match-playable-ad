@@ -1,6 +1,7 @@
 import { GAME_CONFIG } from './config'
 import { createInitialState, GAME_STATUS } from './state'
 import { createFruit } from './entities'
+import { createFloatingText } from './feedback'
 import { isColliding } from './collision'
 import { clamp } from '../utils/clamp'
 
@@ -85,6 +86,14 @@ export class Game {
 
 			if (isCaught) {
 				this.state.score += nextEntity.points
+
+				this.state.particles.push(
+					createFloatingText({
+						text: `+${nextEntity.points}`,
+						x: nextEntity.x + nextEntity.size / 2,
+						y: nextEntity.y,
+					}),
+				)
 				return
 			}
 
@@ -96,6 +105,14 @@ export class Game {
 		})
 
 		this.state.entities = updatedEntities
+
+		this.state.particles = this.state.particles
+			.map(particle => ({
+				...particle,
+				age: particle.age + deltaTime,
+				y: particle.y - 70 * deltaTime,
+			}))
+			.filter(particle => particle.age < particle.lifetime)
 
 		if (this.state.score >= GAME_CONFIG.targetScore) {
 			this.state.status = GAME_STATUS.WIN
@@ -212,6 +229,25 @@ export class Game {
 			)
 			.join('')
 
+		const particlesHtml = this.state.particles
+			.map(particle => {
+				const progress = particle.age / particle.lifetime
+				const opacity = 1 - progress
+
+				return `
+					<div
+						class="floating-text"
+						style="
+							transform: translate(${particle.x}px, ${particle.y}px);
+							opacity: ${opacity}
+						"
+					>
+						${particle.text}
+					</div>
+				`
+			})
+			.join('')
+
 		this.rootElement.innerHTML = `
 			<main class="ad">
 				<section class="game-card game-card--playing">
@@ -234,6 +270,7 @@ export class Game {
 
 				 <div class="game-area">
 						${entitiesHtml}
+						${particlesHtml}
 
 						<div 
 							class="basket"
