@@ -1,5 +1,6 @@
 import { GAME_CONFIG } from './config'
 import { createInitialState, GAME_STATUS } from './state'
+import { createFruit } from './entities'
 import { clamp } from '../utils/clamp'
 
 export class Game {
@@ -47,7 +48,30 @@ export class Game {
 		if (this.state.timeLeft <= 0) {
 			this.state.timeLeft = 0
 			this.state.status = GAME_STATUS.LOSE
+			return
 		}
+
+		this.state.spawnTimer += deltaTime * 1000
+
+		if (this.state.spawnTimer >= GAME_CONFIG.fruit.spawnInterval) {
+			this.state.entities.push(createFruit())
+			if (this.state.spawnTimer >= GAME_CONFIG.fruit.spawnInterval) {
+				const fruit = createFruit()
+
+				console.log('fruit created:', fruit)
+
+				this.state.entities.push(fruit)
+				this.state.spawnTimer = 0
+			}
+			this.state.spawnTimer = 0
+		}
+
+		this.state.entities = this.state.entities
+			.map(entity => ({
+				...entity,
+				y: entity.y + entity.speed * deltaTime,
+			}))
+			.filter(entity => entity.y < GAME_CONFIG.height + entity.size)
 	}
 
 	handleStart() {
@@ -142,6 +166,24 @@ export class Game {
 	renderGame() {
 		const basket = this.state.basket
 
+		const entitiesHtml = this.state.entities
+			.map(
+				entity => `
+      <div
+        class="entity entity--${entity.type}"
+        style="
+          width: ${entity.size}px;
+          height: ${entity.size}px;
+          transform: translate(${entity.x}px, ${entity.y}px);
+          font-size: ${entity.size}px;
+        "
+      >
+        ${entity.emoji}
+      </div>
+    `,
+			)
+			.join('')
+
 		this.rootElement.innerHTML = `
 			<main class="ad">
 				<section class="game-card game-card--playing">
@@ -163,17 +205,19 @@ export class Game {
 					</div>
 
 				 <div class="game-area">
-            <div 
-              class="basket"
-              style="
-                width: ${basket.width}px;
-                height: ${basket.height}px;
-                transform: translate(${basket.x}px, ${basket.y}px);
-              "
-            >
-              🧺
-            </div>
-          </div>
+						${entitiesHtml}
+
+						<div 
+							class="basket"
+							style="
+								width: ${basket.width}px;
+								height: ${basket.height}px;
+								transform: translate(${basket.x}px, ${basket.y}px);
+							"
+						>
+							🧺
+						</div>
+					</div>
 				</section>
 			</main>
 		`

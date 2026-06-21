@@ -311,19 +311,20 @@ button {
 	position: absolute;
 	inset: 0;
 	z-index: 1;
+	overflow: hidden;
 }
 
 .basket {
 	position: absolute;
 	left: 0;
 	top: 0;
+	z-index: 4;
 
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
 	font-size: 48px;
-
 	will-change: transform;
 }
 
@@ -364,4 +365,22 @@ button {
 .secondary-button:hover {
 	transform: translateY(-2px);
 	background: rgba(255, 255, 255, 0.14);
+}
+
+.entity {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 3;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	line-height: 1;
+	pointer-events: none;
+	user-select: none;
+
+	will-change: transform;
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
 }
