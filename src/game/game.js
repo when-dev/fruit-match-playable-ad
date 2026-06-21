@@ -16,8 +16,38 @@ export class Game {
 	}
 
 	start() {
+		this.state = createInitialState()
 		this.state.status = GAME_STATUS.PLAYING
+		this.state.lastTime = performance.now()
+
 		this.render()
+
+		requestAnimationFrame(time => this.loop(time))
+	}
+
+	loop(currentTime) {
+		if (this.state.status !== GAME_STATUS.PLAYING) {
+			return
+		}
+
+		const deltaTime = (currentTime - this.state.lastTime) / 1000
+		this.state.lastTime = currentTime
+
+		this.update(deltaTime)
+		this.render()
+
+		if (this.state.status === GAME_STATUS.PLAYING) {
+			requestAnimationFrame(time => this.loop(time))
+		}
+	}
+
+	update(deltaTime) {
+		this.state.timeLeft -= deltaTime
+
+		if (this.state.timeLeft <= 0) {
+			this.state.timeLeft = 0
+			this.state.status = GAME_STATUS.LOSE
+		}
 	}
 
 	handleStart() {
@@ -26,25 +56,25 @@ export class Game {
 
 	handlePointerMove(event) {
 		if (this.state.status !== GAME_STATUS.PLAYING) {
-			return;
+			return
 		}
 
-		const gameCard = this.rootElement.querySelector('.game-card');
-		const rect = gameCard.getBoundingClientRect();
+		const gameCard = this.rootElement.querySelector('.game-card')
+		const rect = gameCard.getBoundingClientRect()
 
-		const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-		const relativeX = clientX - rect.left;
+		const clientX = event.touches ? event.touches[0].clientX : event.clientX
+		const relativeX = clientX - rect.left
 
-		const scaleX = GAME_CONFIG.width / rect.width;
-		const gameX = relativeX * scaleX;
+		const scaleX = GAME_CONFIG.width / rect.width
+		const gameX = relativeX * scaleX
 
 		this.state.basket.x = clamp(
 			gameX - this.state.basket.width / 2,
 			0,
 			GAME_CONFIG.width - this.state.basket.width,
-		);
+		)
 
-		this.renderGame();
+		this.renderGame()
 	}
 
 	render() {
@@ -56,6 +86,13 @@ export class Game {
 		if (this.state.status === GAME_STATUS.PLAYING) {
 			this.renderGame()
 			return
+		}
+
+		if (
+			this.state.status === GAME_STATUS.WIN ||
+			this.state.status === GAME_STATUS.LOSE
+		) {
+			this.renderEndScreen()
 		}
 	}
 
@@ -140,9 +177,45 @@ export class Game {
 				</section>
 			</main>
 		`
-		const gameCard = this.rootElement.querySelector('.game-card');
+		const gameCard = this.rootElement.querySelector('.game-card')
 
-		gameCard.addEventListener('mousemove', this.handlePointerMove);
-		gameCard.addEventListener('touchmove', this.handlePointerMove, { passive: true });
+		gameCard.addEventListener('mousemove', this.handlePointerMove)
+		gameCard.addEventListener('touchmove', this.handlePointerMove, {
+			passive: true,
+		})
+	}
+
+	renderEndScreen() {
+		const isWin = this.state.status === GAME_STATUS.WIN
+
+		this.rootElement.innerHTML = `
+    <main class="ad">
+      <section class="game-card">
+        <div class="screen screen--end">
+          <p class="eyebrow">${isWin ? 'LEVEL COMPLETE' : 'TIME IS UP'}</p>
+
+          <h1 class="title">${isWin ? 'You Win!' : 'Game Over'}</h1>
+
+          <p class="description">
+            Your score: <strong>${this.state.score}</strong>
+          </p>
+
+          <button class="primary-button" type="button" data-action="restart">
+            Play Again
+          </button>
+
+          <button class="secondary-button" type="button">
+            Play Full Game
+          </button>
+        </div>
+      </section>
+    </main>
+  `
+
+		const restartButton = this.rootElement.querySelector(
+			'[data-action="restart"]',
+		)
+
+		restartButton.addEventListener('click', this.handleStart)
 	}
 }
