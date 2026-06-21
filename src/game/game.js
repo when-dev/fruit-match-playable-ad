@@ -109,22 +109,22 @@ export class Game {
 							Move the basket, catch fruits, avoid bombs and reach the target score before
 						</p>
 
-						<div class="intro-stats">
-							<div>
-								<strong>${GAME_CONFIG.duration}</strong>
-								<span>Time</span>
-							</div>
+					<div class="intro-stats">
+						<div class="intro-stat">
+							<strong>${GAME_CONFIG.duration}</strong>
+							<span>Time</span>
 						</div>
 
-						<div>
+						<div class="intro-stat">
 							<strong>${GAME_CONFIG.targetScore}</strong>
 							<span>Target</span>
 						</div>
 
-						<div>
+						<div class="intro-stat">
 							<strong>${GAME_CONFIG.initialLives}</strong>
 							<span>Lives</span>
 						</div>
+					</div>
 
 						<button class="primary-button" type="button" data-action="start">
 							Start Game

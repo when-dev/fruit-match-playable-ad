@@ -1,342 +1,367 @@
 :root {
-  --color-bg: #15102a;
-  --color-card: #211845;
-  --color-primary: #ff7a1a;
-  --color-primary-light: #ffb347;
-  --color-text: #ffffff;
-  --color-muted: #c9c2ff;
-  --color-success: #5df27d;
+	--color-bg: #15102a;
+	--color-card: #211845;
+	--color-primary: #ff7a1a;
+	--color-primary-light: #ffb347;
+	--color-text: #ffffff;
+	--color-muted: #c9c2ff;
+	--color-success: #5df27d;
 
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family:
+		Inter,
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		sans-serif;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+	margin: 0;
+	min-width: 320px;
+	min-height: 100vh;
 
-  background:
-    radial-gradient(circle at top, #3c2a78 0, transparent 36%),
-    var(--color-bg);
+	background:
+		radial-gradient(circle at top, #3c2a78 0, transparent 36%), var(--color-bg);
 
-  color: var(--color-text);
+	color: var(--color-text);
 }
 
 button {
-  border: none;
-  font: inherit;
-  cursor: pointer;
+	border: none;
+	font: inherit;
+	cursor: pointer;
 }
 
 .ad {
-  min-height: 100vh;
+	min-height: 100vh;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  padding: 16px;
+	padding: 16px;
 }
 
 .game-card {
-  position: relative;
-  overflow: hidden;
+	position: relative;
+	overflow: hidden;
 
-  width: min(100%, 390px);
-  height: min(844px, calc(100vh - 32px));
+	width: min(100%, 390px);
+	height: min(844px, calc(100vh - 32px));
 
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.18), transparent 22%),
-    linear-gradient(180deg, #33236d 0%, #17122f 100%);
+	border-radius: 28px;
+	background:
+		radial-gradient(
+			circle at 50% 12%,
+			rgba(255, 255, 255, 0.18),
+			transparent 22%
+		),
+		linear-gradient(180deg, #33236d 0%, #17122f 100%);
 
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
 }
 
 .game-card::before,
 .game-card::after {
-  content: "";
-  position: absolute;
+	content: '';
+	position: absolute;
 
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
 
-  background: rgba(255, 122, 26, 0.18);
-  filter: blur(8px);
+	background: rgba(255, 122, 26, 0.18);
+	filter: blur(8px);
 }
 
 .game-card::before {
-  top: -70px;
-  right: -60px;
+	top: -70px;
+	right: -60px;
 }
 
 .game-card::after {
-  bottom: -80px;
-  left: -70px;
+	bottom: -80px;
+	left: -70px;
 }
 
 .hero {
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 
-  height: 100%;
-  padding: 56px 28px 40px;
+	height: 100%;
+	padding: 56px 28px 40px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
-  text-align: center;
+	text-align: center;
 }
 
 .eyebrow {
-  margin: 0 0 16px;
+	margin: 0 0 16px;
 
-  color: var(--color-primary-light);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
+	color: var(--color-primary-light);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 2px;
 }
 
 .title {
-  margin: 0;
+	margin: 0;
 
-  font-size: 46px;
-  line-height: 0.95;
-  letter-spacing: -1.5px;
+	font-size: 46px;
+	line-height: 0.95;
+	letter-spacing: -1.5px;
 }
 
 .description {
-  max-width: 290px;
-  margin: 20px 0 32px;
+	max-width: 290px;
+	margin: 20px 0 32px;
 
-  color: var(--color-muted);
-  font-size: 16px;
-  line-height: 1.5;
+	color: var(--color-muted);
+	font-size: 16px;
+	line-height: 1.5;
 }
 
 .play-button {
-  min-width: 190px;
-  height: 56px;
-  padding: 0 28px;
+	min-width: 190px;
+	height: 56px;
+	padding: 0 28px;
 
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
-  color: var(--color-text);
+	border-radius: 999px;
+	background: linear-gradient(
+		180deg,
+		var(--color-primary-light),
+		var(--color-primary)
+	);
+	color: var(--color-text);
 
-  font-weight: 800;
+	font-weight: 800;
 
-  box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35);
+	box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35);
 
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
+	transition:
+		transform 160ms ease,
+		box-shadow 160ms ease;
 }
 
 .play-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(255, 122, 26, 0.45);
+	transform: translateY(-2px);
+	box-shadow: 0 16px 36px rgba(255, 122, 26, 0.45);
 }
 
 .play-button:active {
-  transform: translateY(0);
+	transform: translateY(0);
 }
 
 @media (max-width: 430px) {
-  .ad {
-    padding: 0;
-  }
+	.ad {
+		padding: 0;
+	}
 
-  .game-card {
-    width: 100%;
-    height: 100vh;
-    border-radius: 0;
-  }
+	.game-card {
+		width: 100%;
+		height: 100vh;
+		border-radius: 0;
+	}
 
-  .title {
-    font-size: 42px;
-  }
+	.title {
+		font-size: 42px;
+	}
 }
 
 .screen {
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 
-  height: 100%;
-  padding: 56px 28px 40px;
+	height: 100%;
+	padding: 56px 28px 40px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
-  text-align: center;
+	text-align: center;
 }
 
 .screen--intro {
-  animation: screen-fade-in 400ms ease both;
+	animation: screen-fade-in 400ms ease both;
 }
 
 .intro-stats {
-  width: 100%;
-  max-width: 310px;
-  margin: 0 0 32px;
+	width: 100%;
+	max-width: 310px;
+	margin: 0 0 32px;
 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
 }
 
-.intro-stats div {
-  padding: 12px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
+.intro-stat {
+	min-height: 66px;
+	padding: 12px 8px;
+
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.08);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
-.intro-stats strong {
-  display: block;
-  margin-bottom: 4px;
+.intro-stat strong {
+	display: block;
+	margin-bottom: 4px;
 
-  color: var(--color-primary-light);
-  font-size: 20px;
+	color: var(--color-primary-light);
+	font-size: 20px;
+	line-height: 1;
 }
 
-.intro-stats span {
-  color: var(--color-muted);
-  font-size: 12px;
+.intro-stat span {
+	color: var(--color-muted);
+	font-size: 12px;
 }
 
 .primary-button {
-  min-width: 190px;
-  height: 56px;
-  padding: 0 28px;
+	min-width: 190px;
+	height: 56px;
+	padding: 0 28px;
 
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
-  color: var(--color-text);
+	border-radius: 999px;
+	background: linear-gradient(
+		180deg,
+		var(--color-primary-light),
+		var(--color-primary)
+	);
+	color: var(--color-text);
 
-  font-weight: 800;
+	font-weight: 800;
 
-  box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35);
+	box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35);
 
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
+	transition:
+		transform 160ms ease,
+		box-shadow 160ms ease;
 }
 
 .primary-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(255, 122, 26, 0.45);
+	transform: translateY(-2px);
+	box-shadow: 0 16px 36px rgba(255, 122, 26, 0.45);
 }
 
 .primary-button:active {
-  transform: translateY(0);
+	transform: translateY(0);
 }
 
 .game-card--playing {
-  cursor: none;
-  user-select: none;
-  touch-action: none;
+	cursor: none;
+	user-select: none;
+	touch-action: none;
 }
 
 .hud {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 
-  padding: 18px;
+	padding: 18px;
 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
 }
 
 .hud-item {
-  padding: 10px 8px;
-  border-radius: 14px;
+	padding: 10px 8px;
+	border-radius: 14px;
 
-  background: rgba(255, 255, 255, 0.1);
-  text-align: center;
+	background: rgba(255, 255, 255, 0.1);
+	text-align: center;
 
-  backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
 }
 
 .hud-item span {
-  display: block;
-  margin-bottom: 4px;
+	display: block;
+	margin-bottom: 4px;
 
-  color: var(--color-muted);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
+	color: var(--color-muted);
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .hud-item strong {
-  color: var(--color-text);
-  font-size: 16px;
+	color: var(--color-text);
+	font-size: 16px;
 }
 
 .game-area {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+	position: absolute;
+	inset: 0;
+	z-index: 1;
 }
 
 .basket {
-  position: absolute;
-  left: 0;
-  top: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  font-size: 48px;
+	font-size: 48px;
 
-  will-change: transform;
+	will-change: transform;
 }
 
 @keyframes screen-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .screen--end {
-  animation: screen-fade-in 400ms ease both;
+	animation: screen-fade-in 400ms ease both;
 }
 
 .secondary-button {
-  min-width: 190px;
-  height: 56px;
-  margin-top: 12px;
-  padding: 0 28px;
+	min-width: 190px;
+	height: 56px;
+	margin-top: 12px;
+	padding: 0 28px;
 
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--color-text);
 
-  font-weight: 800;
+	font-weight: 800;
 
-  transition:
-    transform 160ms ease,
-    background-color 160ms ease;
+	transition:
+		transform 160ms ease,
+		background-color 160ms ease;
 }
 
 .secondary-button:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.14);
+	transform: translateY(-2px);
+	background: rgba(255, 255, 255, 0.14);
 }
