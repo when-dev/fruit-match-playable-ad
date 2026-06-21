@@ -1,6 +1,6 @@
 import { GAME_CONFIG } from './config'
 import { createInitialState, GAME_STATUS } from './state'
-import { createFruit } from './entities'
+import { createRandomEntity } from './entities'
 import { createFloatingText } from './feedback'
 import { isColliding } from './collision'
 import { clamp } from '../utils/clamp'
@@ -56,7 +56,7 @@ export class Game {
 		this.state.spawnTimer += deltaTime * 1000
 
 		if (this.state.spawnTimer >= GAME_CONFIG.fruit.spawnInterval) {
-			this.state.entities.push(createFruit())
+			this.state.entities.push(createRandomEntity())
 			this.state.spawnTimer = 0
 		}
 
@@ -85,15 +85,37 @@ export class Game {
 			const isCaught = isColliding(entityRect, basketRect)
 
 			if (isCaught) {
-				this.state.score += nextEntity.points
+				if (nextEntity.type === 'fruit') {
+					this.state.score += nextEntity.points
 
-				this.state.particles.push(
-					createFloatingText({
-						text: `+${nextEntity.points}`,
-						x: nextEntity.x + nextEntity.size / 2,
-						y: nextEntity.y,
-					}),
-				)
+					this.state.particles.push(
+						createFloatingText({
+							text: `+${nextEntity.points}`,
+							x: nextEntity.x + nextEntity.size / 2,
+							y: nextEntity.y,
+							variant: 'success',
+						}),
+					)
+				}
+
+				if (nextEntity.type === 'bomb') {
+					this.state.lives -= nextEntity.damage
+
+					this.state.particles.push(
+						createFloatingText({
+							text: 'BOOM!',
+							x: nextEntity.x + nextEntity.size / 2,
+							y: nextEntity.y,
+							variant: 'danger',
+						}),
+					)
+
+					if (this.state.lives <= 0) {
+						this.state.lives = 0
+						this.state.status = GAME_STATUS.LOSE
+					}
+				}
+
 				return
 			}
 
@@ -114,7 +136,10 @@ export class Game {
 			}))
 			.filter(particle => particle.age < particle.lifetime)
 
-		if (this.state.score >= GAME_CONFIG.targetScore) {
+		if (
+			this.state.status === GAME_STATUS.PLAYING &&
+			this.state.score >= GAME_CONFIG.targetScore
+		) {
 			this.state.status = GAME_STATUS.WIN
 		}
 	}
@@ -236,10 +261,10 @@ export class Game {
 
 				return `
 					<div
-						class="floating-text"
+						class="floating-text floating-text--${particle.variant}"
 						style="
 							transform: translate(${particle.x}px, ${particle.y}px);
-							opacity: ${opacity}
+							opacity: ${opacity};
 						"
 					>
 						${particle.text}

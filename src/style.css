@@ -386,22 +386,36 @@ button {
 }
 
 .floating-text {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 5;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
 
-  color: var(--color-success);
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
+	font-size: 22px;
+	font-weight: 900;
+	line-height: 1;
 
-  pointer-events: none;
-  user-select: none;
+	pointer-events: none;
+	user-select: none;
 
-  text-shadow:
-    0 2px 0 rgba(0, 0, 0, 0.3),
-    0 8px 18px rgba(93, 242, 125, 0.45);
+	will-change: transform, opacity;
+}
 
-  will-change: transform, opacity;
+.entity--bomb .entity__view {
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35))
+		drop-shadow(0 0 12px rgba(255, 75, 75, 0.45));
+}
+
+.floating-text--success {
+	color: var(--color-success);
+	text-shadow:
+		0 2px 0 rgba(0, 0, 0, 0.3),
+		0 8px 18px rgba(93, 242, 125, 0.45);
+}
+
+.floating-text--danger {
+	color: #ff5c5c;
+	text-shadow:
+		0 2px 0 rgba(0, 0, 0, 0.35),
+		0 8px 18px rgba(255, 92, 92, 0.5);
 }

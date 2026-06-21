@@ -25,3 +25,28 @@ export function createFruit() {
     points: GAME_CONFIG.fruit.points,
   };
 }
+
+export function createBomb() {
+  const size = GAME_CONFIG.bomb.size;
+
+  return {
+    id: entityId++,
+    type: 'bomb',
+    emoji: '💣',
+    x: randomBetween(16, GAME_CONFIG.width - size - 16),
+    y: -size,
+    size,
+    speed: GAME_CONFIG.bomb.speed,
+    damage: GAME_CONFIG.bomb.damage,
+  }
+}
+
+export function createRandomEntity() {
+  const bombChance = 0.25;
+  const shouldCreateBomb = Math.random() < bombChance;
+
+  if (shouldCreateBomb) {
+    return createBomb()
+  }
+  return createFruit()
+}
