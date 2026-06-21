@@ -163,3 +163,153 @@ button {
     font-size: 42px;
   }
 }
+
+.screen {
+  position: relative;
+  z-index: 1;
+
+  height: 100%;
+  padding: 56px 28px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.screen--intro {
+  animation: screen-fade-in 400ms ease both;
+}
+
+.intro-stats {
+  width: 100%;
+  max-width: 310px;
+  margin: 0 0 32px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.intro-stats div {
+  padding: 12px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.intro-stats strong {
+  display: block;
+  margin-bottom: 4px;
+
+  color: var(--color-primary-light);
+  font-size: 20px;
+}
+
+.intro-stats span {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.primary-button {
+  min-width: 190px;
+  height: 56px;
+  padding: 0 28px;
+
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
+  color: var(--color-text);
+
+  font-weight: 800;
+
+  box-shadow: 0 12px 28px rgba(255, 122, 26, 0.35);
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(255, 122, 26, 0.45);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.game-card--playing {
+  cursor: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.hud {
+  position: relative;
+  z-index: 2;
+
+  padding: 18px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hud-item {
+  padding: 10px 8px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.1);
+  text-align: center;
+
+  backdrop-filter: blur(8px);
+}
+
+.hud-item span {
+  display: block;
+  margin-bottom: 4px;
+
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hud-item strong {
+  color: var(--color-text);
+  font-size: 16px;
+}
+
+.game-area {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.basket {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 48px;
+
+  will-change: transform;
+}
+
+@keyframes screen-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
