@@ -274,8 +274,8 @@ export class Game {
 	renderGame() {
 		const basket = this.state.basket
 
-		const difficulty = getDifficulty(this.state);
-		const difficultyLevel = Math.floor(difficulty.progress * 3) + 1;
+		const difficulty = getDifficulty(this.state)
+		const difficultyLevel = Math.floor(difficulty.progress * 3) + 1
 
 		const isShaking = this.state.effects.shakeTime > 0
 		const isBasketBumping = this.state.effects.basketBumpTime > 0
@@ -390,17 +390,26 @@ export class Game {
 
           <h1 class="title">${endTitle}</h1>
 
-          <p class="description">
-            Your score: <strong>${this.state.score}</strong>
-          </p>
+					<div class="end-score-card">
+						<span>Your Score</span>
+						<strong>${this.state.score}</strong>
+					</div>
 
-          <button class="primary-button" type="button" data-action="restart">
-            Play Again
-          </button>
+					<p class="description">
+						${
+							isWin
+								? 'Great job! You reached the target score and completed the challenge.'
+								: 'Try again or continue to the full game experience.'
+						}
+					</p>
 
-          <button class="secondary-button" type="button">
-            Play Full Game
-          </button>
+					<button class="primary-button" type="button">
+						Play Full Game
+					</button>
+
+					<button class="secondary-button" type="button" data-action="restart">
+						Play Again
+					</button>
         </div>
       </section>
     </main>
