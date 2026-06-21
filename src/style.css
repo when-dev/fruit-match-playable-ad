@@ -1,4 +1,7 @@
 :root {
+	--game-width: 390px;
+	--game-height: 844px;
+
 	--color-bg: #15102a;
 	--color-card: #211845;
 	--color-primary: #ff7a1a;
@@ -38,7 +41,9 @@ button {
 }
 
 .ad {
-	min-height: 100vh;
+	width: 100vw;
+	height: 100dvh;
+	overflow: hidden;
 
 	display: flex;
 	align-items: center;
@@ -51,8 +56,8 @@ button {
 	position: relative;
 	overflow: hidden;
 
-	width: min(100%, 390px);
-	height: min(844px, calc(100vh - 32px));
+	width: var(--game-width);
+	height: var(--game-height);
 
 	border-radius: 28px;
 	background:
@@ -166,22 +171,6 @@ button {
 
 .play-button:active {
 	transform: translateY(0);
-}
-
-@media (max-width: 430px) {
-	.ad {
-		padding: 0;
-	}
-
-	.game-card {
-		width: 100%;
-		height: 100vh;
-		border-radius: 0;
-	}
-
-	.title {
-		font-size: 42px;
-	}
 }
 
 .screen {
@@ -324,14 +313,18 @@ button {
 }
 
 .game-area::before {
-  content: "";
-  position: absolute;
-  inset: 82px 0 0;
-  z-index: 0;
+	content: '';
+	position: absolute;
+	inset: 82px 0 0;
+	z-index: 0;
 
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0, 0, 0, 0.22) 100%);
-  pointer-events: none;
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgba(0, 0, 0, 0.08) 72%,
+		rgba(0, 0, 0, 0.22) 100%
+	);
+	pointer-events: none;
 }
 
 .basket {
@@ -455,24 +448,22 @@ button {
 }
 
 .basket__view {
-  display: block;
-  line-height: 1;
-  font-size: 48px;
-  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+	display: block;
+	line-height: 1;
+	font-size: 48px;
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
 }
 
 .basket__view--glow-success {
-  filter:
-    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
-    drop-shadow(0 0 14px rgba(93, 242, 125, 0.65))
-    drop-shadow(0 0 32px rgba(93, 242, 125, 0.35));
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
+		drop-shadow(0 0 14px rgba(93, 242, 125, 0.65))
+		drop-shadow(0 0 32px rgba(93, 242, 125, 0.35));
 }
 
 .basket__view--glow-danger {
-  filter:
-    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
-    drop-shadow(0 0 14px rgba(255, 92, 92, 0.7))
-    drop-shadow(0 0 34px rgba(255, 122, 26, 0.35));
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
+		drop-shadow(0 0 14px rgba(255, 92, 92, 0.7))
+		drop-shadow(0 0 34px rgba(255, 122, 26, 0.35));
 }
 
 @keyframes screen-shake {
@@ -565,4 +556,73 @@ button {
 	color: var(--color-primary-light);
 	font-size: 44px;
 	line-height: 1;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+	html,
+	body,
+	#app {
+		width: 100%;
+		height: 100%;
+		min-width: 0;
+		min-height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background: #17122f;
+	}
+
+	body {
+		position: fixed;
+		inset: 0;
+	}
+
+	.game-card {
+		border-radius: 0;
+		box-shadow: none;
+	}
+}
+
+@media (pointer: coarse), (max-width: 430px) {
+	html,
+	body,
+	#app {
+		width: 100%;
+		height: 100%;
+		min-width: 0;
+		min-height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background: #17122f;
+	}
+
+	body {
+		position: fixed;
+		inset: 0;
+	}
+
+	.ad {
+		width: 100vw;
+		height: var(--game-height);
+		min-height: var(--game-height);
+		padding: 0;
+
+		display: block;
+
+		background: #17122f;
+	}
+
+	.game-card {
+		width: var(--game-width);
+		height: var(--game-height);
+
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.screen {
+		height: 100%;
+		padding: 48px 24px 36px;
+	}
 }
