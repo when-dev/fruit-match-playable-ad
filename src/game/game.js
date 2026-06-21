@@ -280,6 +280,9 @@ export class Game {
 		const isShaking = this.state.effects.shakeTime > 0
 		const isBasketBumping = this.state.effects.basketBumpTime > 0
 		const flashVariant = this.state.effects.flashVariant
+		const basketGlowClass = flashVariant
+			? `basket__view--glow-${flashVariant}`
+			: ''
 
 		const entitiesHtml = this.state.entities
 			.map(
@@ -343,7 +346,6 @@ export class Game {
 					</div>
 
 				 <div class="game-area">
-				 		${flashVariant ? `<div class="hit-flash hit-flash--${flashVariant}"></div>` : ''} 
 						${entitiesHtml}
 						${particlesHtml}
 
@@ -355,9 +357,9 @@ export class Game {
 								transform: translate(${basket.x}px, ${basket.y}px);
 							"
 						>
-						<span class="basket__view ${isBasketBumping ? 'basket__view--bump' : ''}">
-							🧺
-						</span>
+						  <span class="basket__view ${isBasketBumping ? 'basket__view--bump' : ''} ${basketGlowClass}">
+								🧺
+							</span>
 						</div>
 					</div>
 				</section>

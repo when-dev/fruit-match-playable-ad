@@ -443,23 +443,6 @@ button {
 	animation: screen-shake 250ms ease;
 }
 
-.hit-flash {
-	position: absolute;
-	inset: 0;
-	z-index: 2;
-
-	pointer-events: none;
-	animation: hit-flash 180ms ease both;
-}
-
-.hit-flash--success {
-	background: rgba(93, 242, 125, 0.16);
-}
-
-.hit-flash--danger {
-	background: rgba(255, 92, 92, 0.22);
-}
-
 .basket__view {
 	display: block;
 	line-height: 1;
@@ -469,6 +452,27 @@ button {
 
 .basket__view--bump {
 	animation: basket-bump 180ms ease;
+}
+
+.basket__view {
+  display: block;
+  line-height: 1;
+  font-size: 48px;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+}
+
+.basket__view--glow-success {
+  filter:
+    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 14px rgba(93, 242, 125, 0.65))
+    drop-shadow(0 0 32px rgba(93, 242, 125, 0.35));
+}
+
+.basket__view--glow-danger {
+  filter:
+    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 14px rgba(255, 92, 92, 0.7))
+    drop-shadow(0 0 34px rgba(255, 122, 26, 0.35));
 }
 
 @keyframes screen-shake {
@@ -494,16 +498,6 @@ button {
 
 	100% {
 		transform: translateX(0);
-	}
-}
-
-@keyframes hit-flash {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
 	}
 }
 
