@@ -1,6 +1,7 @@
 import { GAME_CONFIG } from './config'
 import { createInitialState, GAME_STATUS } from './state'
 import { createRandomEntity } from './entities'
+import { getDifficulty } from './difficulty'
 import { createFloatingText } from './feedback'
 import { isColliding } from './collision'
 import { clamp } from '../utils/clamp'
@@ -54,10 +55,18 @@ export class Game {
 			return
 		}
 
+		const difficulty = getDifficulty(this.state)
+
 		this.state.spawnTimer += deltaTime * 1000
 
-		if (this.state.spawnTimer >= GAME_CONFIG.fruit.spawnInterval) {
-			this.state.entities.push(createRandomEntity())
+		if (this.state.spawnTimer >= difficulty.spawnInterval) {
+			this.state.entities.push(
+				createRandomEntity({
+					bombChance: difficulty.bombChance,
+					speedMultiplier: difficulty.speedMultiplier,
+				}),
+			)
+
 			this.state.spawnTimer = 0
 		}
 
@@ -264,6 +273,10 @@ export class Game {
 
 	renderGame() {
 		const basket = this.state.basket
+
+		const difficulty = getDifficulty(this.state);
+		const difficultyLevel = Math.floor(difficulty.progress * 3) + 1;
+
 		const isShaking = this.state.effects.shakeTime > 0
 		const isBasketBumping = this.state.effects.basketBumpTime > 0
 		const flashVariant = this.state.effects.flashVariant
@@ -323,6 +336,10 @@ export class Game {
 							<span>Lives</span>
 							<strong>${'❤️'.repeat(this.state.lives)}</strong>
 						</div>
+					</div>
+
+					<div class="difficulty-label">
+						Level ${difficultyLevel}
 					</div>
 
 				 <div class="game-area">
