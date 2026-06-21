@@ -97,6 +97,10 @@ export class Game {
 							variant: 'success',
 						}),
 					)
+
+					this.state.effects.basketBumpTime = 0.18
+					this.state.effects.flashTime = 0.12
+					this.state.effects.flashVariant = 'success'
 				}
 
 				if (nextEntity.type === 'bomb') {
@@ -111,10 +115,14 @@ export class Game {
 						}),
 					)
 
+					this.state.effects.shakeTime = 0.25
+					this.state.effects.flashTime = 0.2
+					this.state.effects.flashVariant = 'danger'
+
 					if (this.state.lives <= 0) {
 						this.state.lives = 0
 						this.state.status = GAME_STATUS.LOSE
-						this.state.endReason = 'bomb';
+						this.state.endReason = 'bomb'
 					}
 				}
 
@@ -143,6 +151,25 @@ export class Game {
 			this.state.score >= GAME_CONFIG.targetScore
 		) {
 			this.state.status = GAME_STATUS.WIN
+		}
+
+		this.state.effects.shakeTime = Math.max(
+			0,
+			this.state.effects.shakeTime - deltaTime,
+		)
+
+		this.state.effects.flashTime = Math.max(
+			0,
+			this.state.effects.flashTime - deltaTime,
+		)
+
+		this.state.effects.basketBumpTime = Math.max(
+			0,
+			this.state.effects.basketBumpTime - deltaTime,
+		)
+
+		if (this.state.effects.flashTime === 0) {
+			this.state.effects.flashVariant = null
 		}
 	}
 
@@ -237,6 +264,9 @@ export class Game {
 
 	renderGame() {
 		const basket = this.state.basket
+		const isShaking = this.state.effects.shakeTime > 0
+		const isBasketBumping = this.state.effects.basketBumpTime > 0
+		const flashVariant = this.state.effects.flashVariant
 
 		const entitiesHtml = this.state.entities
 			.map(
@@ -277,7 +307,7 @@ export class Game {
 
 		this.rootElement.innerHTML = `
 			<main class="ad">
-				<section class="game-card game-card--playing">
+				<section class="game-card game-card--playing ${isShaking ? 'game-card--shake' : ''}">
 					<div class="hud">
 						<div class="hud-item">
 							<span>Score</span>
@@ -296,18 +326,21 @@ export class Game {
 					</div>
 
 				 <div class="game-area">
+				 		${flashVariant ? `<div class="hit-flash hit-flash--${flashVariant}"></div>` : ''} 
 						${entitiesHtml}
 						${particlesHtml}
 
 						<div 
-							class="basket"
+							class="basket ${isBasketBumping ? 'basket--bump' : ''}"
 							style="
 								width: ${basket.width}px;
 								height: ${basket.height}px;
 								transform: translate(${basket.x}px, ${basket.y}px);
 							"
 						>
+						<span class="basket__view ${isBasketBumping ? 'basket__view--bump' : ''}">
 							🧺
+						</span>
 						</div>
 					</div>
 				</section>
@@ -324,13 +357,13 @@ export class Game {
 	renderEndScreen() {
 		const isWin = this.state.status === GAME_STATUS.WIN
 
-		const endTitle = isWin ? 'You Win!' : 'Game Over';
+		const endTitle = isWin ? 'You Win!' : 'Game Over'
 
-		const endEyebrow = isWin 
-		? 'LEVEL COMPLETE'
-		: this.state.endReason === 'bomb'
-			? 'BOMBED OUT'
-			: 'TIME IS UP';
+		const endEyebrow = isWin
+			? 'LEVEL COMPLETE'
+			: this.state.endReason === 'bomb'
+				? 'BOMBED OUT'
+				: 'TIME IS UP'
 
 		this.rootElement.innerHTML = `
     <main class="ad">

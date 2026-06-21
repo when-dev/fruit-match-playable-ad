@@ -26,6 +26,13 @@ export function createInitialState() {
 		entities: [],
 		particles: [],
 
+		effects: {
+			shakeTime: 0,
+			flashTime: 0,
+			basketBumpTime: 0,
+			flashVariant: null,
+		},
+
 		lastTime: 0,
 		spawnTimer: 0,
 	};

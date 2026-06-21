@@ -324,7 +324,6 @@ button {
 	align-items: center;
 	justify-content: center;
 
-	font-size: 48px;
 	will-change: transform;
 }
 
@@ -418,4 +417,86 @@ button {
 	text-shadow:
 		0 2px 0 rgba(0, 0, 0, 0.35),
 		0 8px 18px rgba(255, 92, 92, 0.5);
+}
+
+.game-card--shake {
+	animation: screen-shake 250ms ease;
+}
+
+.hit-flash {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+
+	pointer-events: none;
+	animation: hit-flash 180ms ease both;
+}
+
+.hit-flash--success {
+	background: rgba(93, 242, 125, 0.16);
+}
+
+.hit-flash--danger {
+	background: rgba(255, 92, 92, 0.22);
+}
+
+.basket__view {
+	display: block;
+	line-height: 1;
+	font-size: 48px;
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+}
+
+.basket__view--bump {
+	animation: basket-bump 180ms ease;
+}
+
+@keyframes screen-shake {
+	0% {
+		transform: translateX(0);
+	}
+
+	20% {
+		transform: translateX(-6px);
+	}
+
+	40% {
+		transform: translateX(6px);
+	}
+
+	60% {
+		transform: translateX(-4px);
+	}
+
+	80% {
+		transform: translateX(4px);
+	}
+
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes hit-flash {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes basket-bump {
+	0% {
+		transform: scale(1);
+	}
+
+	45% {
+		transform: scale(1.18) translateY(-4px);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
