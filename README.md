@@ -1,4 +1,4 @@
-# Fruit Catcher — HTML5 Playable Mini Game
+# Fruit Catcher - HTML5 Playable Mini Game
 
 A mobile-first HTML5 playable mini game built with Vanilla JavaScript, Vite and CSS.
 
